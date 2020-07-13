@@ -17,12 +17,14 @@ router.post('/add', async (req, res) => {
     title, url, description
   }
   await db.query('INSERT INTO links set ?', [newLink])
+  req.flash('success', 'Link saved successfully')
   res.redirect('/links')
 })
 
 router.get('/delete/:id', async (req, res) => {
   const { id } = req.params
   await db.query('DELETE FROM links WHERE id = ?', [id])
+  req.flash('success', 'Links removed successfully')
   res.redirect('/links')
 })
 
@@ -39,6 +41,7 @@ router.post('/edit/:id', async (req, res) => {
     title, url, description
   }
   await db.query('UPDATE links SET ? WHERE id = ?', [newLink, id])
+  req.flash('success', 'Links updated successfully')
   res.redirect('/links')
 })
 
