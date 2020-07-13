@@ -1,4 +1,4 @@
-const { Router } = require('express')
+const {Router} = require('express')
 const db = require('../database')
 const router = Router()
 
@@ -7,6 +7,11 @@ router.get('/add', (req, res) => {
 })
 
 router.post('/add', async (req, res) => {
+  const {title, url, description} = req.body
+  const newLink = {
+    title, url, description
+  }
+  await db.query('INSERT INTO links set ?', [newLink])
   res.send('received')
 })
 
