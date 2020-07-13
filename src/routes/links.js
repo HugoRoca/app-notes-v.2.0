@@ -6,6 +6,11 @@ router.get('/add', (req, res) => {
   res.render('links/add')
 })
 
+router.get('/', async (req, res) => {
+  const links = await db.query('SELECT * FROM links')
+  res.render('links/list', { links })
+})
+
 router.post('/add', async (req, res) => {
   const { title, url, description } = req.body
   const newLink = {
@@ -15,9 +20,10 @@ router.post('/add', async (req, res) => {
   res.redirect('/links')
 })
 
-router.get('/', async (req, res) => {
-  const links = await db.query('SELECT * FROM links')
-  req.render('links/list', { links })
+router.get('/delete/:id', async (req, res) => {
+  const { id } = req.params
+  await db.query('DELETE FROM links WHERE id = ?', [id])
+  res.redirect('/links')
 })
 
 module.exports = router
