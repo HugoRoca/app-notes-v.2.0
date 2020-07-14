@@ -53,7 +53,7 @@ DROP TABLE IF EXISTS `users`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `users` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `username` varchar(16) NOT NULL,
+  `username` varchar(100) NOT NULL,
   `password` varchar(60) NOT NULL,
   `fullname` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
