@@ -9,3 +9,9 @@ $ npm i nodemon -D
 ```
 
 For running exec `npm run dev`
+
+## Examples
+
+![](./docs/index.png)
+
+![](./docs/links.png)
