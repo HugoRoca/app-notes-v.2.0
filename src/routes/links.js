@@ -1,17 +1,18 @@
 const {Router} = require('express')
 const db = require('../database')
+const { isLoggedIn } = require('../lib/auth')
 const router = Router()
 
-router.get('/add', (req, res) => {
+router.get('/add', isLoggedIn, (req, res) => {
   res.render('links/add')
 })
 
-router.get('/', async (req, res) => {
+router.get('/', isLoggedIn, async (req, res) => {
   const links = await db.query('SELECT * FROM links')
   res.render('links/list', { links })
 })
 
-router.post('/add', async (req, res) => {
+router.post('/add', isLoggedIn, async (req, res) => {
   const { title, url, description } = req.body
   const newLink = {
     title, url, description
@@ -21,20 +22,20 @@ router.post('/add', async (req, res) => {
   res.redirect('/links')
 })
 
-router.get('/delete/:id', async (req, res) => {
+router.get('/delete/:id', isLoggedIn, async (req, res) => {
   const { id } = req.params
   await db.query('DELETE FROM links WHERE id = ?', [id])
   req.flash('success', 'Links removed successfully')
   res.redirect('/links')
 })
 
-router.get('/edit/:id', async (req, res) => {
+router.get('/edit/:id', isLoggedIn, async (req, res) => {
   const { id } = req.params
   const link = await db.query('SELECT * FROM links WHERE id = ?', [id])
   res.render('links/edit', { link: link[0] })
 })
 
-router.post('/edit/:id', async (req, res) => {
+router.post('/edit/:id', isLoggedIn, async (req, res) => {
   const { id } = req.params
   const { title, url, description } = req.body
   const newLink = {
