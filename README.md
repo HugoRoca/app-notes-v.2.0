@@ -7,3 +7,5 @@ $ npm i express express-handlebars express-session mysql express-mysql-session m
 
 $ npm i nodemon -D
 ```
+
+For running exec `npm run dev`
